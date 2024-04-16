@@ -1,0 +1,295 @@
+object Form1: TForm1
+  Left = 770
+  Height = 735
+  Top = 197
+  Width = 641
+  Anchors = [akLeft]
+  Caption = 'SNS-HDR Lite GUI 2'
+  ClientHeight = 735
+  ClientWidth = 641
+  DesignTimePPI = 120
+  OnCreate = FormCreate
+  LCLVersion = '2.2.2.0'
+  object Panel1: TPanel
+    Left = 24
+    Height = 440
+    Top = 16
+    Width = 539
+    Anchors = [akTop, akLeft, akRight]
+    Caption = 'Panel1'
+    ClientHeight = 440
+    ClientWidth = 539
+    TabOrder = 0
+    object CheckGroup1: TCheckGroup
+      Left = 344
+      Height = 159
+      Top = 104
+      Width = 169
+      Anchors = [akTop, akRight]
+      AutoFill = True
+      Caption = 'Opcje'
+      ChildSizing.LeftRightSpacing = 6
+      ChildSizing.TopBottomSpacing = 6
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 1
+      TabOrder = 0
+    end
+    object DropListaProfil: TComboBox
+      Left = 400
+      Height = 28
+      Top = 272
+      Width = 107
+      Anchors = [akTop, akRight]
+      ItemHeight = 20
+      ItemIndex = 0
+      Items.Strings = (
+        'default'
+        'interior'
+        'landscape'
+        'ldr'
+        'natural'
+        'neutral'
+        'night'
+      )
+      TabOrder = 1
+      Text = 'default'
+    end
+    object Label1: TLabel
+      Left = 345
+      Height = 28
+      Top = 272
+      Width = 48
+      Anchors = [akTop, akRight]
+      AutoSize = False
+      Caption = 'Profil'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object CBKonwersja: TCheckBox
+      Left = 347
+      Height = 25
+      Top = 320
+      Width = 26
+      Anchors = [akTop, akRight]
+      AutoSize = False
+      TabOrder = 2
+    end
+    object Label2: TLabel
+      Left = 373
+      Height = 40
+      Top = 312
+      Width = 144
+      Anchors = [akTop, akRight]
+      AutoSize = False
+      Caption = 'Konwersja do profilu kolorów sRGB'
+      ParentColor = False
+      WordWrap = True
+    end
+    object DropListaFormat: TComboBox
+      Left = 414
+      Height = 28
+      Top = 368
+      Width = 107
+      Anchors = [akTop, akRight]
+      ItemHeight = 20
+      ItemIndex = 0
+      Items.Strings = (
+        'jpeg'
+        'tiff8'
+        'tiff16'
+      )
+      TabOrder = 3
+      Text = 'jpeg'
+    end
+    object Label3: TLabel
+      Left = 339
+      Height = 44
+      Top = 360
+      Width = 77
+      Anchors = [akTop, akRight]
+      AutoSize = False
+      Caption = 'Format wyjsciowy'
+      ParentColor = False
+      WordWrap = True
+    end
+    object ListBox1: TListBox
+      Left = 16
+      Height = 322
+      Top = 64
+      Width = 304
+      Anchors = [akTop, akLeft, akRight]
+      Items.Strings = (
+        'Miejsce'
+        'Na '
+        'Twoje'
+        'Zdjęcia'
+      )
+      ItemHeight = 0
+      ItemIndex = 0
+      MultiSelect = True
+      OnDrawItem = ListBox1DrawItem
+      Style = lbOwnerDrawFixed
+      TabOrder = 4
+    end
+    object BtnAdd: TButton
+      Left = 16
+      Height = 48
+      Top = 0
+      Width = 106
+      Caption = 'Dodaj foty'
+      OnClick = BtnAddClick
+      TabOrder = 5
+    end
+    object BtnDel: TButton
+      Left = 192
+      Height = 32
+      Top = 0
+      Width = 127
+      Caption = 'Usuń zaznaczone'
+      OnClick = BtnDelClick
+      TabOrder = 6
+    end
+    object RadioGroupRozmiar: TRadioGroup
+      Left = 344
+      Height = 89
+      Top = 8
+      Width = 169
+      Anchors = [akTop, akRight]
+      AutoFill = True
+      Caption = 'Zmniejszenie rozmiaru'
+      ChildSizing.LeftRightSpacing = 6
+      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 4
+      ClientHeight = 64
+      ClientWidth = 165
+      Columns = 4
+      ItemIndex = 0
+      Items.Strings = (
+        'x1'
+        'x2'
+        'x3'
+        'x4'
+        'x5'
+        'x6'
+        'x7'
+        'x8'
+      )
+      TabOrder = 7
+    end
+    object CBWyrownanie: TCheckBox
+      Left = 360
+      Height = 24
+      Top = 128
+      Width = 106
+      Anchors = [akTop, akRight]
+      Caption = 'Wyrównanie'
+      TabOrder = 8
+    end
+    object CBDuszki: TCheckBox
+      Left = 360
+      Height = 24
+      Top = 160
+      Width = 148
+      Anchors = [akTop, akRight]
+      Caption = 'Usuwanie duszków'
+      TabOrder = 9
+    end
+    object CBPanorama: TCheckBox
+      Left = 360
+      Height = 24
+      Top = 192
+      Width = 124
+      Anchors = [akTop, akRight]
+      Caption = 'Tryb panoramy'
+      TabOrder = 10
+    end
+    object CBLuminacja: TCheckBox
+      Left = 360
+      Height = 24
+      Top = 224
+      Width = 124
+      Anchors = [akTop, akRight]
+      Caption = 'Auto luminacja'
+      TabOrder = 11
+    end
+    object BtnDelAll: TButton
+      Left = 112
+      Height = 32
+      Top = 392
+      Width = 129
+      Caption = 'Usuń WSZYSTKO'
+      OnClick = BtnDelAllClick
+      TabOrder = 12
+    end
+  end
+  object EditCommand: TEdit
+    Left = 16
+    Height = 28
+    Top = 568
+    Width = 547
+    Anchors = [akTop, akLeft, akRight]
+    Enabled = False
+    TabOrder = 1
+  end
+  object BtnWykonaj: TButton
+    Left = 16
+    Height = 48
+    Top = 616
+    Width = 272
+    Caption = 'Wykonaj'
+    OnClick = BtnWykonajClick
+    TabOrder = 2
+  end
+  object BtnExe: TButton
+    Left = 392
+    Height = 48
+    Top = 464
+    Width = 171
+    Caption = 'Zlokalizuj SNS-HDR.exe'
+    Color = clRed
+    DoubleBuffered = True
+    Font.Color = clRed
+    OnClick = BtnExeClick
+    ParentDoubleBuffered = False
+    ParentFont = False
+    TabOrder = 3
+  end
+  object EditBinaryPath: TEdit
+    Left = 26
+    Height = 28
+    Top = 471
+    Width = 360
+    Enabled = False
+    TabOrder = 4
+    Text = 'SNS-HDR Binary Path'
+  end
+  object CBPromtLock: TCheckBox
+    Left = 478
+    Height = 24
+    Top = 600
+    Width = 85
+    Caption = 'Odblokuj'
+    OnChange = CBPromtLockChange
+    TabOrder = 5
+  end
+  object OpenDialog1: TOpenDialog
+    Filter = 'Dozwolone obrazy|*.jpg;*.jpeg;*.jpe;*.jfif;*.png;*.tif;*.tiff;*.exr;*.hdr;*.arw;*.cf2;*.cr2;*.crw;*.dng;*.erf,*.fff,*.mef,*.mrw;*.nef;*.orf;*.pef;*.raf;*.raw;*rw2;*.sr2;*.srw;*.x3f  '
+    Options = [ofAllowMultiSelect, ofPathMustExist, ofFileMustExist, ofEnableSizing, ofDontAddToRecent, ofViewDetail]
+    Left = 144
+    Top = 48
+  end
+  object OpenDialog2: TOpenDialog
+    Filter = 'SNS-HDR Lite Binary|SNS-HDR.exe'
+    Left = 560
+    Top = 472
+  end
+end
