@@ -22,6 +22,7 @@ type
     BtnWykonaj: TButton;
     BtnExe: TButton;
     BtnDelAll: TButton;
+    BtnOutputFolder: TButton;
     CBWyrownanie: TCheckBox;
     CBDuszki: TCheckBox;
     CBPanorama: TCheckBox;
@@ -31,6 +32,7 @@ type
     CheckGroup1: TCheckGroup;
     DropListaProfil: TComboBox;
     DropListaFormat: TComboBox;
+    EditOutputFolder: TEdit;
     EditBinaryPath: TEdit;
     EditCommand: TEdit;
     Label1: TLabel;
@@ -41,11 +43,13 @@ type
     OpenDialog2: TOpenDialog;
     Panel1: TPanel;
     RadioGroupRozmiar: TRadioGroup;
+    SelectDirectoryDialog1: TSelectDirectoryDialog;
 
     procedure BtnAddClick(Sender: TObject);
     procedure BtnDelAllClick(Sender: TObject);
     procedure BtnDelClick(Sender: TObject);
     procedure BtnExeClick(Sender: TObject);
+    procedure BtnOutputFolderClick(Sender: TObject);
     procedure BtnWykonajClick(Sender: TObject);
     procedure CBPromtLockChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -146,20 +150,24 @@ begin
        btnExe.Font.Style := [];
        btnWykonaj.Enabled:=True;
   end;
+
+  g_Photos := [];
 end;
 
 procedure TForm1.UpdatePhotoList();
 var i:integer;
 begin
   g_Photos_cmd_string := '';
-  ListBox1.Clear();
-     for i:=0 to length(g_Photos)-1 do
-     begin
+
+  if (ListBox1.Count > 0) then  ListBox1.Clear();
+  for i:=0 to length(g_Photos)-1 do
+  begin
+
         ListBox1.Items.Add(g_Photos[i].ShortPath);
         g_Photos_cmd_string := g_Photos_cmd_string + ' "' + g_Photos[i].FullPath+'"';
-     end;
+  end;
 
-     PanelOnChange(self);
+  PanelOnChange(self);
 
 end;
 
@@ -174,12 +182,19 @@ begin
           begin
              temp.FullPath := OpenDialog1.Files[i];
              temp.ShortPath:= ExtractFileName(temp.FullPath);
-             insert(temp,tempList,length(tempList)); //insert at the end
+             insert(temp,tempList,length(tempList)); //insert at the end of table
           end;
 
           g_Photos := Concat(g_Photos,tempList);
-          UpdatePhotoList();
 
+
+          if ( ( Length (EditOutputFolder.Text) < 2 ) and (OpenDialog1.Files.Count > 0) ) then
+          begin
+              EditOutputFolder.Text := Copy(ExtractFilePath(temp.FullPath), 1, Length(ExtractFilePath(temp.FullPath)) - 1) ;
+              //remove '/' on the end
+          end;
+
+          UpdatePhotoList();
      end;
 end;
 
@@ -216,20 +231,44 @@ begin
 
 end;
 
+procedure TForm1.BtnOutputFolderClick(Sender: TObject);
+begin
+  if SelectDirectoryDialog1.Execute then
+  begin
+          EditOutputFolder.Text:= SelectDirectoryDialog1.FileName;
+          PanelOnChange(self);
+  end;
+end;
+
 
 function TForm1.GetAllParams():String;
-var rozmiar,opcje,preset,format,srgb : String;
+var rozmiar,opcje,preset,format,srgb,outputName,rozszerzenie,opcje_nazwa_pliku : String;
 begin
    rozmiar := '-x'+ IntToStr( RadioGroupRozmiar.ItemIndex + 1);
    opcje:=' ';
-   if (not CBWyrownanie.Checked) then opcje:=opcje+'-da ';
-   if (not CBDuszki.Checked) then opcje:=opcje+'-dd ';
-   if (CBPanorama.Checked) then opcje:=opcje+'-pm ';
-   if (not CBLuminacja.Checked) then opcje:=opcje+'-dal ';
+   opcje_nazwa_pliku:='';
+   if (not CBWyrownanie.Checked) then opcje:=opcje+'-da ' else opcje_nazwa_pliku := opcje_nazwa_pliku+'W ';
+   if (not CBDuszki.Checked) then opcje:=opcje+'-dd ' else opcje_nazwa_pliku := opcje_nazwa_pliku+'uD ';
+   if (not CBLuminacja.Checked) then opcje:=opcje+'-dal ' else opcje_nazwa_pliku := opcje_nazwa_pliku+'AL ';
+   if (CBPanorama.Checked) then
+   begin
+        opcje:=opcje+'-pm ';
+        opcje_nazwa_pliku := opcje_nazwa_pliku+'Pn ';
+   end;
+
    preset := '-'+DropListaProfil.Items[ DropListaProfil.ItemIndex ]+' ';
    format := '-'+DropListaFormat.Items[ DropListaFormat.ItemIndex ]+' ';
    if (CBKonwersja.Checked) then srgb := '-srgb ';
-   Result := Concat(rozmiar,opcje,preset,format,srgb);
+   if (ListBox1.Count > 0) then
+   begin
+        case DropListaFormat.ItemIndex of
+             0:  rozszerzenie := '.jpg';
+             1,2: rozszerzenie := '.tiff';
+        end;
+        outputName := '-o' + ' "'+ EditOutputFolder.Text+'\'
+                   + ListBox1.Items[0] + Concat(preset,opcje_nazwa_pliku,rozmiar)+rozszerzenie+'"';
+   end;
+   Result := Concat(rozmiar,opcje,preset,format,srgb, outputName);
 
 
 end;
@@ -237,8 +276,10 @@ end;
  procedure TForm1.PanelOnChange(Sender: TObject);
  var params : string;
 begin
+
       params := GetAllParams();
       EditCommand.Text := params + g_Photos_cmd_string ;
+
 end;
 
 function TForm1.ExecuteBinary():boolean;
@@ -254,7 +295,8 @@ end;
 
  procedure TForm1.BtnWykonajClick(Sender: TObject);
  begin
-     ExecuteBinary();
+     if (ListBox1.Count > 0) then
+        ExecuteBinary();
  end;
 
 procedure TForm1.CBPromtLockChange(Sender: TObject);

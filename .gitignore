@@ -1,3 +1,5 @@
 backup/**
 lib/**
 HDR_GUI.exe
+.gitignore
+Strip.bat

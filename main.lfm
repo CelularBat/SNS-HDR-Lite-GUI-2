@@ -123,14 +123,7 @@ object Form1: TForm1
       Top = 64
       Width = 304
       Anchors = [akTop, akLeft, akRight]
-      Items.Strings = (
-        'Miejsce'
-        'Na '
-        'Twoje'
-        'Zdjęcia'
-      )
       ItemHeight = 0
-      ItemIndex = 0
       MultiSelect = True
       OnDrawItem = ListBox1DrawItem
       Style = lbOwnerDrawFixed
@@ -234,7 +227,7 @@ object Form1: TForm1
   object EditCommand: TEdit
     Left = 16
     Height = 28
-    Top = 568
+    Top = 592
     Width = 547
     Anchors = [akTop, akLeft, akRight]
     Enabled = False
@@ -243,7 +236,7 @@ object Form1: TForm1
   object BtnWykonaj: TButton
     Left = 16
     Height = 48
-    Top = 616
+    Top = 632
     Width = 272
     Caption = 'Wykonaj'
     OnClick = BtnWykonajClick
@@ -264,9 +257,9 @@ object Form1: TForm1
     TabOrder = 3
   end
   object EditBinaryPath: TEdit
-    Left = 26
+    Left = 16
     Height = 28
-    Top = 471
+    Top = 472
     Width = 360
     Enabled = False
     TabOrder = 4
@@ -275,21 +268,41 @@ object Form1: TForm1
   object CBPromtLock: TCheckBox
     Left = 478
     Height = 24
-    Top = 600
+    Top = 624
     Width = 85
     Caption = 'Odblokuj'
     OnChange = CBPromtLockChange
     TabOrder = 5
   end
+  object EditOutputFolder: TEdit
+    Left = 144
+    Height = 28
+    Top = 528
+    Width = 419
+    TabOrder = 6
+  end
+  object BtnOutputFolder: TButton
+    Left = 16
+    Height = 45
+    Top = 520
+    Width = 122
+    Caption = 'Folder wyjsciowy'
+    OnClick = BtnOutputFolderClick
+    TabOrder = 7
+  end
   object OpenDialog1: TOpenDialog
     Filter = 'Dozwolone obrazy|*.jpg;*.jpeg;*.jpe;*.jfif;*.png;*.tif;*.tiff;*.exr;*.hdr;*.arw;*.cf2;*.cr2;*.crw;*.dng;*.erf,*.fff,*.mef,*.mrw;*.nef;*.orf;*.pef;*.raf;*.raw;*rw2;*.sr2;*.srw;*.x3f  '
     Options = [ofAllowMultiSelect, ofPathMustExist, ofFileMustExist, ofEnableSizing, ofDontAddToRecent, ofViewDetail]
     Left = 144
-    Top = 48
+    Top = 24
   end
   object OpenDialog2: TOpenDialog
     Filter = 'SNS-HDR Lite Binary|SNS-HDR.exe'
-    Left = 560
+    Left = 360
     Top = 472
+  end
+  object SelectDirectoryDialog1: TSelectDirectoryDialog
+    Left = 152
+    Top = 528
   end
 end
