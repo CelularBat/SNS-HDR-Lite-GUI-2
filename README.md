@@ -1,0 +1,1 @@
+Simple GUI for SNS-HDR-Lite: https://www.sns-hdr.com/
